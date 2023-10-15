@@ -415,7 +415,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_byjbc")
 }],
-"loop": true,
+"loop": false,
 "name": &"WallLand",
 "speed": 10.0
 }, {
@@ -429,13 +429,16 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_60goj")
 }],
-"loop": true,
+"loop": false,
 "name": &"WallSlide",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 position = Vector2(231, 80)
+motion_mode = 1
+floor_snap_length = 5.0
+safe_margin = 0.2
 script = ExtResource("1_r8m25")
 metadata/_edit_group_ = true
 
@@ -448,11 +451,14 @@ debug_color = Color(0.933333, 0, 0.639216, 0.419608)
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8hyxe")
-animation = &"Roll"
+animation = &"WallSlide"
 autoplay = "Idle"
 
-[node name="Animation_Roll_Timer" type="Timer" parent="Animation"]
+[node name="Roll_Rest_Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Wall_Sliding_Timer" type="Timer" parent="."]
 one_shot = true
 
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_animation_finished"]
-[connection signal="timeout" from="Animation/Animation_Roll_Timer" to="." method="_on_animation_roll_timer_timeout"]
+[connection signal="timeout" from="Roll_Rest_Timer" to="." method="_on_animation_roll_timer_timeout"]
